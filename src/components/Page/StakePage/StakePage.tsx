@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { StakePageHeader } from "../../Header/StakePageHeader";
 import { StakePageField } from "./StakePageFiels/StakePageField";
 import { StakePageInfo } from "./StakePageInfo";
-import { StakeModalTransaction } from "../../Modal/PageModal/ModalTranzaction/StakeModalTranzaction/StakeModalTranzaction";
+import { StakeModalTransaction } from "../../Modal/PageModal/ModalTranzaction/StakeModalTranzaction/StakeModalTransaction";
 
 
 const Container = styled.div`

@@ -3,7 +3,7 @@ import { StakePageHeader } from "../../Header/StakePageHeader";
 import { WithdrawalPageField } from "./WithdrawalPageFiels/WithdrawalPageField";
 import { WithdrawalPageInfo } from "./WithdrawalPageInfo";
 import { WithdrawalPageHeader } from "../../Header/WithdrawalPageHeader";
-import { WithdrawalModalTransaction } from "../../Modal/PageModal/ModalTranzaction/WithdrawalModalTranzaction/WithdrawalModalTranzaction";
+import { WithdrawalModalTransaction } from "../../Modal/PageModal/ModalTranzaction/WithdrawalModalTranzaction/WithdrawalModalTransaction";
 
 
 const Container = styled.div`
