@@ -80,27 +80,6 @@ export const ClaimPageField = () => {
                 </TokenContainer>
                 <ClaimPageAmount />
             </Field>
-            <Field style={{ border: "2px solid #EC8600" }}>
-                <TokenContainer>
-                    <TokenLogo src={qsTIAlofo} />
-                    <TokenName TextColor={theme.TextColor}>qsTIA</TokenName>
-                </TokenContainer>
-                <ClaimPageAmount />
-            </Field>
-            <Field style={{ border: "2px solid #EC8600" }}>
-                <TokenContainer>
-                    <TokenLogo src={qsTIAlofo} />
-                    <TokenName TextColor={theme.TextColor}>qsTIA</TokenName>
-                </TokenContainer>
-                <ClaimPageAmount />
-            </Field>
-            <Field style={{ border: "2px solid #EC8600" }}>
-                <TokenContainer>
-                    <TokenLogo src={qsTIAlofo} />
-                    <TokenName TextColor={theme.TextColor}>qsTIA</TokenName>
-                </TokenContainer>
-                <ClaimPageAmount />
-            </Field>
         </Container>
     )
 }

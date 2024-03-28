@@ -12,6 +12,9 @@ const Header = styled.div <{headerColor: string}>`
     background: ${props => props.headerColor};
     display: flex;
     align-items: center;
+    @media (max-width: 500px) {
+        background: transparent;
+    }
 `
 
 const Logo = styled.img`
