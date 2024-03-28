@@ -92,7 +92,7 @@ export const DesLink = () => {
     return (
         <BlockLink>
             <LinkBlock>
-                <MainHeaderLink to="/stake">Stake</MainHeaderLink>
+                <MainHeaderLink to="/">Stake</MainHeaderLink>
             </LinkBlock>
             <LinkBlock>
                 <MainHeaderLink to="/withdrawal">Withdrawals</MainHeaderLink>
@@ -114,7 +114,7 @@ export const MobileLink = () => {
             <NavBlock navBlockBg={theme.navBlockBg}>
                 <MobBlockLink>
                     <MobLinkBlock>
-                        <MainHeaderLink to="/stake">
+                        <MainHeaderLink to="/">
                             <WalletLogo icon={theme.active == true ? myBlackLogo : myLogo}></WalletLogo>
                             Stake
                         </MainHeaderLink>
