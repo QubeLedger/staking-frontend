@@ -9,9 +9,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 100px;
     @media (max-width: 500px) {
         width: 90%
     }
+`
+
+const Confirm = styled.div`
+    width: 100%;
+    display: flex;
 `
 
 
@@ -20,9 +26,9 @@ export const ClaimPage = () => {
         <Container>
             <ClaimPageHeader/>
             <ClaimPageField/>
-            <div style={{display: "flex"}}>
+            <Confirm>
                 <ClaimPageConfirm/>
-            </div>
+            </Confirm>
             <ClaimPageInfo/>
         </Container>
     )
