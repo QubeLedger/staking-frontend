@@ -6,6 +6,8 @@ import { useToggleTheme } from '../../../../../hooks/useToggleTheme';
 import { Modal } from '../../../Modal';
 import { useWallet } from '../../../../../hooks/useWallet';
 import { useAmountLiquidStakeStore } from '../../../../../hooks/useAmountInStore';
+import { TOKEN_INFO } from '../../../../../constants';
+import { useBalancesStore } from '../../../../../hooks/useBalanceStore';
 
 const ModalDialogOverlay = animated(DialogOverlay);
 const StyledDialogOvelay = styled(ModalDialogOverlay)`
@@ -106,7 +108,6 @@ const HeaderBlock = styled.div`
     margin-left: 17px;
 `
 
-
 const ModalDialogContent = animated(DialogContent);
 const StyledDialogContent = styled(ModalDialogContent) <{ modalBgColor: string, modalBorder: string }>`
     &[data-reach-dialog-content] {
@@ -126,16 +127,18 @@ const StyledDialogContent = styled(ModalDialogContent) <{ modalBgColor: string, 
     }
 `
 
-
 export const StakeModalTransaction = () => {
 
     const open = () => { setShowModalTranzaction({ b: true }) };
     const close = () => { setShowModalTranzaction({ b: false }) };
-    const [ShowModalTranzaction, setShowModalTranzaction] = useShowModalTransaction();
-    const [theme, setTheme] = useToggleTheme();
-    const [wallet, setWallet] = useWallet();
-    const [walletModalStatus, setWalletModalStatus] = useShowWalletModal();
-    const [amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore();
+    const [ ShowModalTranzaction, setShowModalTranzaction] = useShowModalTransaction();
+    const [ theme, setTheme] = useToggleTheme();
+    const [ wallet, setWallet] = useWallet();
+    const [ walletModalStatus, setWalletModalStatus] = useShowWalletModal();
+    const [ amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore();
+    const [ balances, setBalances ] = useBalancesStore();
+
+    let balance = balances.find((balance) => balance.denom == amtIn.denom)
 
     const Content =
         <>
@@ -172,6 +175,10 @@ export const StakeModalTransaction = () => {
     } else if (amtIn.amt == '' || amtIn.amt == '0' || isNaN(Number(amtIn.amt))) {
         Button = <OpenButtonBlock>
             <InactiveButton>Enter {amtIn.base} amount</InactiveButton>
+        </OpenButtonBlock>
+    } else if (Number(balance?.amt) < (Number(amtIn.amt) * (10 ** Number(TOKEN_INFO.find((token) => token.Base == amtIn.base)?.Decimals))) ) { 
+        Button = <OpenButtonBlock>
+            <InactiveButton>Insufficient funds</InactiveButton>
         </OpenButtonBlock>
     } else {
         Button = <OpenButtonBlock>
