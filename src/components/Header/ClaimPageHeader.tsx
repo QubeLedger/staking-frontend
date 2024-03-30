@@ -33,7 +33,7 @@ export const ClaimPageHeader = () => {
 
     return(
         <Header>
-            <PageText TextColor={theme.TextColor}>Claim ATOM</PageText>
+            <PageText TextColor={theme.TextColor}>Claim</PageText>
             <PageDescription>
                 Claiming previously unbonding tokens
             </PageDescription>

@@ -3,6 +3,15 @@ import { ClaimPageHeader } from "../../Header/ClaimPageHeader";
 import { ClaimPageField } from "./ClaimPageField/ClaimPageField";
 import { ClaimPageInfo } from "./ClaimPageInfo";
 import { ClaimPageConfirm } from "../../Buttons/PageButtons/ClaimPageConfirm";
+import { useWallet } from "../../../hooks/useWallet";
+import { useClient } from "../../../hooks/useClient";
+import { useBalancesStore } from "../../../hooks/useBalanceStore";
+import { useEffect } from "react";
+import { UpdateBalances } from "../../../web3/balances";
+import { InitSigner } from "../../../web3/stargate";
+import { useUnbondingsStore } from "../../../hooks/useUnbondingsStore";
+import { UpdateUnbondings } from "../../../web3/unbonding";
+import { ClaimModalTransaction } from "../../Modal/PageModal/ModalTransaction/ClaimModalTransaction/ClaimModalTransaction";
 
 const Container = styled.div`
     width: 450px;
@@ -22,13 +31,33 @@ const Confirm = styled.div`
 
 
 export const ClaimPage = () => {
+
+    const [ wallet, setWallet ] = useWallet();
+	const [ client, setClient ] = useClient();
+	const [ balances, setBalances ] = useBalancesStore();
+    const [ unbondings, setUnbondings] = useUnbondingsStore();
+
+    useEffect(() => {
+        async function update() {
+            if (wallet.wallet !== null) {
+                let blns = await UpdateBalances(wallet, balances);
+                setBalances(blns)
+
+                let client = await InitSigner();
+                setClient(client)
+
+                let unb = await UpdateUnbondings(wallet);
+                setUnbondings(unb)
+            }
+        }
+        update()
+    }, [])
+
     return(
         <Container>
             <ClaimPageHeader/>
             <ClaimPageField/>
-            <Confirm>
-                <ClaimPageConfirm/>
-            </Confirm>
+            <ClaimModalTransaction />
             <ClaimPageInfo/>
         </Container>
     )

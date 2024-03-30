@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useToggleTheme } from "../../hooks/useToggleTheme";
+import { useAmountLiquidStakeStore } from "../../hooks/useAmountInStore";
 
 const Header = styled.div`
     width: 100%;
@@ -27,12 +28,13 @@ const PageDescription = styled.h3`
 export const StakePageHeader = () => {
 
     const [theme, setTheme] = useToggleTheme()
+    const [amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore()
 
     return(
         <Header>
-            <PageText TextColor={theme.TextColor}>Stake ATOM</PageText>
+            <PageText TextColor={theme.TextColor}>Stake {amtIn.base}</PageText>
             <PageDescription>
-                Stake ATOM and receive qsATOM while staking.
+                Stake {amtIn.base} and receive {amtIn.base_out} while staking.
             </PageDescription>
         </Header>
     )
