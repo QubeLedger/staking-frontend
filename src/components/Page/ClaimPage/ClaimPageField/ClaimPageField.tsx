@@ -4,13 +4,30 @@ import qsTIAlofo from '../../../../assets/svg/qsTIA.svg'
 import { ClaimPageAmount } from "./ClaimPageAmount";
 import { useToggleTheme } from "../../../../hooks/useToggleTheme";
 
-const Container = styled.div <{BorderField: string, claimBg: string}>`
+const Container = styled.div <{ BorderField: string, claimBg: string }>`
     width: 100%;
     height: 100%;
     background: ${props => props.claimBg};
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px 0;
+    margin-top: 30px;
+    border: ${props => props.BorderField};
+    border-radius: 20px;
+    @media (max-width: 500px) {
+        margin-top: 20px;
+    }
+`
+
+const NoAssets = styled.div <{ BorderField: string, claimBg: string }>`
+    width: 100%;
+    height: 220px;
+    background: ${props => props.claimBg};
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 20px 0;
     margin-top: 30px;
     border: ${props => props.BorderField};
@@ -64,6 +81,14 @@ export const ClaimPageField = () => {
 
     const [theme, setTheme] = useToggleTheme()
 
+
+    const noAssets =
+        <>
+            <NoAssets BorderField={theme.BorderField} claimBg={theme.claimBg}>
+                <h4 style={{ color: "#C0C0C0" }}>No withdrawal requests detected.</h4>
+            </NoAssets>
+        </>
+
     return (
         <Container BorderField={theme.BorderField} claimBg={theme.claimBg}>
             <Field style={{ border: "2px solid #44A884", marginTop: "0px" }}>
@@ -83,3 +108,7 @@ export const ClaimPageField = () => {
         </Container>
     )
 }
+
+
+
+
