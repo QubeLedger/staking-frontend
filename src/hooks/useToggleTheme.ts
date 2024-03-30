@@ -21,6 +21,7 @@ interface Theme {
   navBlockBg: string;
   ModalHoverColor: string;
   claimBg: string;
+  hoverModal: string;
 }
 
 export const ThemeWhiteState: Theme = { 
@@ -43,7 +44,8 @@ export const ThemeWhiteState: Theme = {
     walletHover: '#ECECEC',
     navBlockBg: '#ECEBEB',
     ModalHoverColor: '#ECECEC',
-    claimBg: '#fff'
+    claimBg: '#fff',
+    hoverModal: '#eee'
 };
 
 export const ThemeBlackState: Theme = { 
@@ -66,7 +68,8 @@ export const ThemeBlackState: Theme = {
   walletHover: '#333333',
   navBlockBg: '#202020',
   ModalHoverColor: '#333333',
-  claimBg: '#202020'
+  claimBg: '#202020',
+  hoverModal: '#333'
 };
 
 

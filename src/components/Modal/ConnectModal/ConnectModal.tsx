@@ -103,6 +103,7 @@ const HeaderText = styled.a <{TextColor: string}>`
     font-size: 20px;
     color: ${props => props.TextColor};
     white-space: nowrap;
+    font-weight: 500;
 `
 
 const HeaderBlock = styled.div`

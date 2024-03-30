@@ -18,7 +18,7 @@ const BlockLink = styled.nav`
     height: 60px;
     justify-content: center;
     margin-right: 30px;
-    margin-left: 203px;
+    margin-left: 185px;
     @media (max-width: 1110px) {
         gap: 30px;
     }
