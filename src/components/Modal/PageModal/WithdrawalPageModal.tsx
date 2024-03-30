@@ -193,7 +193,7 @@ const TokenContrainer = styled.div <{ hoverModal: string }>`
     cursor: pointer;
     border-radius: 15px;
     transition: all .2s ease-in-out;
-    :hover{
+    &:hover{
         background-color: ${props => props.hoverModal};
     }
 `

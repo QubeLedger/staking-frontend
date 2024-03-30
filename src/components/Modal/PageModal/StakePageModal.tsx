@@ -187,12 +187,11 @@ const Token = styled.div`
 
 const TokenContrainer = styled.div <{ hoverModal: string }>`
     width: 85%;
-    height: 100%;
     margin-top: 10px;
     cursor: pointer;
     border-radius: 15px;
     transition: all .2s ease-in-out;
-    :hover{
+    &:hover{
         background-color: ${props => props.hoverModal};
     }
 `
