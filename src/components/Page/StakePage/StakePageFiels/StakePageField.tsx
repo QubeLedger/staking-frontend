@@ -4,6 +4,10 @@ import ArrowWhite from '../../.././../assets/svg/ArrowWhite.svg'
 import { StakePageInput } from "./StakePageInput";
 import { StakePageModal } from "../../../Modal/PageModal/StakePageModal";
 import { useToggleTheme } from "../../../../hooks/useToggleTheme";
+import { useAmountLiquidStakeStore } from "../../../../hooks/useAmountInStore";
+import { TOKEN_INFO } from "../../../../constants";
+import { Coin, useBalancesStore } from "../../../../hooks/useBalanceStore";
+import { getBalanceByToken } from "../../../../function/utils";
 
 const Field = styled.div <{BorderField: string}>`
     width: 100%;
@@ -57,10 +61,25 @@ const MaxAmount = styled.div`
     cursor: pointer;
 `
 
-
 export const StakePageField = () => {
 
-    const [theme, setTheme] = useToggleTheme()
+    const [ theme, setTheme] = useToggleTheme();
+    const [ amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore()
+    const [ balances, setBalances ] = useBalancesStore();
+
+    const HandleSetMaxLiquidStakeValue = () => {
+        let amount = isNaN(getBalanceByToken(balances, amtIn.denom))? 0 : getBalanceByToken(balances, amtIn.denom)
+        setAmountLiquidStakeStore(
+            {
+                amt: amount.toFixed(2),
+                base: amtIn.base,
+                logo: amtIn.logo,
+                denom: amtIn.denom,
+                base_out: amtIn.base_out,
+                denom_out: amtIn.denom_out,
+            }
+        );
+    }
 
     return (
         <>
@@ -69,8 +88,8 @@ export const StakePageField = () => {
                 <StakePageInput/>
             </Field>
             <InpField BorderField={theme.BorderField}>
-                <AvaibleBlock>Available: 0 ATOM</AvaibleBlock>
-                <MaxAmount>MAX</MaxAmount>
+                <AvaibleBlock>Available: {isNaN(getBalanceByToken(balances, amtIn.denom))? "0" : getBalanceByToken(balances, amtIn.denom).toFixed(2)} {amtIn.base}</AvaibleBlock>
+                <MaxAmount onClick={HandleSetMaxLiquidStakeValue}>MAX</MaxAmount>
             </InpField>
         </>
     )

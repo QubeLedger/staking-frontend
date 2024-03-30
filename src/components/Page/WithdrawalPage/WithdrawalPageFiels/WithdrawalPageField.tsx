@@ -4,6 +4,9 @@ import ArrowWhite from '../../.././../assets/svg/ArrowWhite.svg'
 import { WithdrawalPageInput } from "./WithdrawalPageInput";
 import { WithdrawalPageModal } from "../../../Modal/PageModal/WithdrawalPageModal";
 import { useToggleTheme } from "../../../../hooks/useToggleTheme";
+import { getBalanceByToken } from "../../../../function/utils";
+import { useAmountLiquidUnstakeStore } from "../../../../hooks/useAmountInStore";
+import { useBalancesStore } from "../../../../hooks/useBalanceStore";
 
 const Field = styled.div <{BorderField: string}>`
     width: 100%;
@@ -60,7 +63,23 @@ const MaxAmount = styled.div`
 
 export const WithdrawalPageField = () => {
 
-    const [theme, setTheme] = useToggleTheme()
+    const [theme, setTheme] = useToggleTheme();
+    const [ amtIn, setAmountLiquidUnstakeStore] = useAmountLiquidUnstakeStore()
+    const [ balances, setBalances ] = useBalancesStore();
+
+    const HandleSetMaxLiquidStakeValue = () => {
+        let amount = isNaN(getBalanceByToken(balances, amtIn.denom))? 0 : getBalanceByToken(balances, amtIn.denom)
+        setAmountLiquidUnstakeStore(
+            {
+                amt: amount.toFixed(2),
+                base: amtIn.base,
+                logo: amtIn.logo,
+                denom: amtIn.denom,
+                base_out: amtIn.base_out,
+                denom_out: amtIn.denom_out,
+            }
+        );
+    }
 
     return (
         <>
@@ -69,8 +88,8 @@ export const WithdrawalPageField = () => {
                 <WithdrawalPageInput/>
             </Field>
             <InpField BorderField={theme.BorderField}>
-                <AvaibleBlock>Available: 0 ATOM</AvaibleBlock>
-                <MaxAmount>MAX</MaxAmount>
+                <AvaibleBlock>Available: {isNaN(getBalanceByToken(balances, amtIn.denom))? "0" : getBalanceByToken(balances, amtIn.denom).toFixed(2)} {amtIn.base}</AvaibleBlock>
+                <MaxAmount onClick={HandleSetMaxLiquidStakeValue}>MAX</MaxAmount>
             </InpField>
         </>
     )

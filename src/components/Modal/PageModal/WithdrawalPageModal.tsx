@@ -7,6 +7,10 @@ import ArrowBlack from '../../../assets/svg/ArrowBlack.svg'
 import loop from '../../../assets/svg/loop.svg'
 import { useToggleTheme } from "../../../hooks/useToggleTheme";
 import { useShowModalStake } from "../../../hooks/useShowModal";
+import { useAmountLiquidUnstakeStore } from "../../../hooks/useAmountInStore";
+import { TOKEN_INFO } from "../../../constants";
+import { getBalanceByToken } from "../../../function/utils";
+import { useBalancesStore } from "../../../hooks/useBalanceStore";
 
 
 
@@ -212,18 +216,32 @@ const StyledDialogContent = styled(ModalDialogContent) <{ modalBgColor: string, 
 
 export const WithdrawalPageModal = () => {
 
-    const [theme, setTheme] = useToggleTheme()
-    const [ShowModalStake, setShowModalStake] = useShowModalStake();
+    const [ theme, setTheme] = useToggleTheme()
+    const [ ShowModalStake, setShowModalStake] = useShowModalStake();
+    const [ amtIn, setAmountLiquidUnstakeStore] = useAmountLiquidUnstakeStore();
+    const [ balances, setBalances ] = useBalancesStore();
 
     const open = () => { setShowModalStake({ b: true }) };
     const close = () => { setShowModalStake({ b: false }) };
+
+    let tokens = TOKEN_INFO.filter((token) => token.type == "stake-token")
+
+    let TokensComponent = tokens.map((token) =>
+        <TokenContrainer>
+            <Token>
+                <TokenLogo src={token?.Logo} />
+                <TokenName style={{ fontSize: "20px" }} TextColor={theme.TextColor}>{token?.Base}</TokenName>
+            </Token>
+            <AmountText TextColor={theme.TextColor}>{isNaN(getBalanceByToken(balances, String(token?.Denom)))? "0" : getBalanceByToken(balances, String(token?.Denom)).toFixed(2)}</AmountText>
+        </TokenContrainer>
+    )
 
     return (
         <ModalBlock>
             <OpenButton TextColor={theme.TextColor} onClick={open}>
                 <div style={{ width: "200px", display: "flex", alignItems: "center" }}>
-                    <TokenLogo src={AtomLogo} />
-                    <TokenName TextColor={theme.TextColor}>ATOM</TokenName>
+                    <TokenLogo src={amtIn.logo} />
+                    <TokenName TextColor={theme.TextColor}>{amtIn.base}</TokenName>
                     <ArrowLogo ArrrowColor={theme.active == true ? ArrowWhite : ArrowBlack} />
                 </div>
             </OpenButton>
@@ -245,13 +263,7 @@ export const WithdrawalPageModal = () => {
                             <SearchToken placeholder='Search'></SearchToken>
                         </SearchDiv>
                     </SearchBorder>
-                    <TokenContrainer>
-                        <Token>
-                            <TokenLogo src={AtomLogo} />
-                            <TokenName style={{fontSize: "20px"}} TextColor={theme.TextColor}>ATOM</TokenName>
-                        </Token>
-                        <AmountText TextColor={theme.TextColor}>0</AmountText>
-                    </TokenContrainer>
+                    {TokensComponent}
                 </StyledDialogContent>
             </StyledDialogOvelay>
         </ModalBlock>

@@ -2,36 +2,23 @@ import { SigningStargateClient } from "@cosmjs/stargate";
 import { QUBE_TESTNET_INFO } from "../constants";
 import { Registry } from "@cosmjs/proto-signing";
 import { defaultRegistryTypes, GasPrice } from "@cosmjs/stargate";
-import { 
-        typeUrlMsgGrowDeposit,
-        typeUrlMsgGrowWithdrawal,
-        typeUrlMsgCreateBorrow,
-        typeUrlMsgDeleteBorrow,
-        typeUrlMsgMsgCreateLend,
-        typeUrlMsgWithdrawalLend,
-        typeUrlMsgOpenLiquidationPosition,
-        typeUrlMsgCloseLiquidationPosition,
-        MsgGrowDeposit,
-        MsgGrowWithdrawal,
-        MsgCreateBorrow,
-        MsgDeleteBorrow,
-        MsgCreateLend,
-        MsgWithdrawalLend,
-        MsgOpenLiquidationPosition,
-        MsgCloseLiquidationPosition,
-} from "../constants/cosmos/proto/grow/tx";
+import {
+        MsgClaim,
+        MsgLiquidStake,
+        MsgLiquidUnstake,
+        MsgRedeem,
+        COSMOS_LIQUID_STAKE_URL,
+        COSMOS_LIQUID_UN_STAKE_URL,
+        REDEEM_URL,
+        CLAIM_URL,
+} from "../constants/core/liquidstakeibc/v1beta1/msgs";
 
 export async function InitSigner() {
         const reg = new Registry(defaultRegistryTypes)
-        reg.register(typeUrlMsgGrowDeposit, MsgGrowDeposit)
-        reg.register(typeUrlMsgGrowWithdrawal, MsgGrowWithdrawal)
-        reg.register(typeUrlMsgCreateBorrow, MsgCreateBorrow)
-        reg.register(typeUrlMsgDeleteBorrow, MsgDeleteBorrow)
-        reg.register(typeUrlMsgMsgCreateLend, MsgCreateLend)
-        reg.register(typeUrlMsgWithdrawalLend, MsgWithdrawalLend)
-        reg.register(typeUrlMsgOpenLiquidationPosition, MsgOpenLiquidationPosition)
-        reg.register(typeUrlMsgCloseLiquidationPosition, MsgCloseLiquidationPosition)
-
+        reg.register(COSMOS_LIQUID_STAKE_URL, MsgLiquidStake)
+        reg.register(COSMOS_LIQUID_UN_STAKE_URL, MsgLiquidUnstake)
+        reg.register(REDEEM_URL, MsgRedeem)
+        reg.register(CLAIM_URL, MsgClaim)
 
         var offlineSigner = (window as any).getOfflineSigner(QUBE_TESTNET_INFO.chainId);
         var accounts = await offlineSigner.getAccounts();

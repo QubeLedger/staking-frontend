@@ -1,33 +1,50 @@
 import { createStore } from './store';
+import AtomLogo from "../assets/svg/AtomLogo.webp"
+import qsAtomLogo from "../assets/svg/qsATOM.svg"
+import { TOKEN_INFO } from '../constants';
 
-
-export interface AmountIn {
-        amt: string;
-        base: string;
-}
-
-export interface AmountCollateralBorrow {
+export interface AmountStake {
         base: string;
         logo: string;
         denom: string;
+        amt: string;
+        base_out: string;
+        denom_out: string;
 }
 
-const defaultState: AmountIn = { 
-        amt: "", 
-        base: ""
+export interface Amount {
+        base: string;
+        logo: string;
+        denom: string;
+        amt: string;
+}
+
+const defaultStateStake: AmountStake = { 
+        base: "ATOM",
+        logo: AtomLogo,
+        denom: String(TOKEN_INFO.find((token) => token.Base == "ATOM")?.Denom),
+        amt: "",
+        base_out: "qsATOM",
+        denom_out: String(TOKEN_INFO.find((token) => token.Base == "qsATOM")?.Denom),
 };
 
+const defaultStateUnstake: AmountStake = { 
+        base: "qsATOM",
+        logo: qsAtomLogo,
+        denom: String(TOKEN_INFO.find((token) => token.Base == "qsATOM")?.Denom),
+        amt: "",
+        base_out: "ATOM",
+        denom_out: String(TOKEN_INFO.find((token) => token.Base == "ATOM")?.Denom),
+};
 
-const defaultStateCollateralBorrow: AmountCollateralBorrow = { 
+const defaultState: Amount = { 
         base: "Select Token",
         logo: "",
         denom: "",
+        amt: "",
 };
 
-export const [useAmountDepositEarnStore] = createStore(defaultState);
-export const [useAmountWithdrawalEarnStore] = createStore(defaultState);
-export const [useAmountBorrowEarnStore] = createStore(defaultState);
-export const [useAmountCollateralEarnStore] = createStore(defaultState);
-export const [useAmountBorrowRepayEarnStore] = createStore(defaultState);
-export const [useAmountBorrowInfoStore] = createStore(defaultStateCollateralBorrow)
-export const [useAmountCollateralInfoStore] = createStore(defaultStateCollateralBorrow)
+export const [useAmountLiquidStakeStore] = createStore(defaultStateStake);
+export const [useAmountLiquidUnstakeStore] = createStore(defaultStateUnstake);
+export const [useAmountRedeemStore] = createStore(defaultState);
+export const [useAmountClaimStore] = createStore(defaultState);

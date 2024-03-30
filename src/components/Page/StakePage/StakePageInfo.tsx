@@ -1,5 +1,8 @@
 import styled from "styled-components";
 import { useToggleTheme } from "../../../hooks/useToggleTheme";
+import { useHostChainStore } from "../../../hooks/useHostChainStore";
+import { useAmountLiquidStakeStore } from "../../../hooks/useAmountInStore";
+import { QUBE_TESTNET_INFO } from "../../../constants";
 
 const Container = styled.div`
     width: 100%;
@@ -39,6 +42,8 @@ const ImportantField = styled.h3 <{ TextColor: string }>`
 export const StakePageInfo = () => {
 
     const [theme, setTheme] = useToggleTheme()
+    const [hostChain, setHostChain] = useHostChainStore();
+    const [amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore()
 
     return(
         <Container>
@@ -49,10 +54,10 @@ export const StakePageInfo = () => {
                 <InfoText>Max transaction fee</InfoText>
             </div>
             <div style={{textAlign: "right"}}>
-                <InfoText style={{color: "#44A884"}}>13.3%</InfoText>
-                <InfoText>0 qsATOM</InfoText>
-                <InfoText>1 ATOM = 1.326 qsATOM</InfoText>
-                <InfoText>0.01 QUBE</InfoText>
+                <InfoText style={{color: "#44A884"}}>0.0%</InfoText>
+                <InfoText>0 {amtIn.base_out}</InfoText>
+                <InfoText>1 {amtIn.base} = {hostChain.c_value} {amtIn.base_out}</InfoText>
+                <InfoText>{QUBE_TESTNET_INFO.feeCurrencies[0].gasPriceStep.average} {QUBE_TESTNET_INFO.feeCurrencies[0].coinDenom}</InfoText>
             </div>
         </Container>
     )

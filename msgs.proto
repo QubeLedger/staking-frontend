@@ -1,0 +1,31 @@
+syntax = "proto3";
+package core.liquidstakeibc.v1beta1;
+
+option go_package = "github.com/QuadrateOrg/core/x/liquidstakeibc/types";
+
+message MsgLiquidStake {
+  string delegator_address = 1;
+  string amount = 2;
+}
+
+message MsgLiquidStakeLSM {
+
+  string delegator_address = 1;
+  repeated string delegations = 2;
+}
+
+message MsgLiquidUnstake {
+  string delegator_address = 1;
+  string amount = 2;
+}
+
+
+message MsgRedeem {
+  string delegator_address = 1;
+  string amount = 2;
+}
+
+
+message MsgClaim {
+  string delegator_address = 1;
+}

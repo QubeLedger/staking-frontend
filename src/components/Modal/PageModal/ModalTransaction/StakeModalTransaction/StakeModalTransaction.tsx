@@ -1,9 +1,11 @@
 import { DialogContent, DialogOverlay } from '@reach/dialog';
 import styled from 'styled-components';
 import { animated } from '@react-spring/web';
-import { useShowModalTranzaction } from '../../../../../hooks/useShowModal';
+import { useShowModalTransaction, useShowWalletModal } from '../../../../../hooks/useShowModal';
 import { useToggleTheme } from '../../../../../hooks/useToggleTheme';
 import { Modal } from '../../../Modal';
+import { useWallet } from '../../../../../hooks/useWallet';
+import { useAmountLiquidStakeStore } from '../../../../../hooks/useAmountInStore';
 
 const ModalDialogOverlay = animated(DialogOverlay);
 const StyledDialogOvelay = styled(ModalDialogOverlay)`
@@ -58,6 +60,20 @@ const OpenButton = styled.button`
     &:active {
          transform: scale(0.95);
     }
+`
+
+const InactiveButton = styled.button`
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    background: #757575;
+    border: none;
+    margin: 0 auto;
+    border-radius: 12px;
+    cursor: pointer;
+    color: #fff;
+    margin-top: 20px;
 `
 
 const CloseDiv = styled.div`
@@ -115,8 +131,11 @@ export const StakeModalTransaction = () => {
 
     const open = () => { setShowModalTranzaction({ b: true }) };
     const close = () => { setShowModalTranzaction({ b: false }) };
-    const [ShowModalTranzaction, setShowModalTranzaction] = useShowModalTranzaction();
-    const [theme, setTheme] = useToggleTheme()
+    const [ShowModalTranzaction, setShowModalTranzaction] = useShowModalTransaction();
+    const [theme, setTheme] = useToggleTheme();
+    const [wallet, setWallet] = useWallet();
+    const [walletModalStatus, setWalletModalStatus] = useShowWalletModal();
+    const [amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore();
 
     const Content =
         <>
@@ -140,10 +159,30 @@ export const StakeModalTransaction = () => {
         theme.modalBorder
     )
 
-    return (
-        <OpenButtonBlock>
+    let Button;
+
+    if (wallet.init == false) {
+        Button = <OpenButtonBlock onClick={() => { setWalletModalStatus({ b: true }) }}>
+            <OpenButton>Connect wallet</OpenButton>
+        </OpenButtonBlock>
+    } else if (amtIn.base == "Select Token") {
+        Button = <OpenButtonBlock>
+            <InactiveButton>Select Token</InactiveButton>
+        </OpenButtonBlock>
+    } else if (amtIn.amt == '' || amtIn.amt == '0' || isNaN(Number(amtIn.amt))) {
+        Button = <OpenButtonBlock>
+            <InactiveButton>Enter {amtIn.base} amount</InactiveButton>
+        </OpenButtonBlock>
+    } else {
+        Button = <OpenButtonBlock>
             <OpenButton onClick={open}>Confirm</OpenButton>
             {ModalComponent}
         </OpenButtonBlock>
+    }
+
+    return (
+        <>
+            {Button}
+        </>
     );
 }
