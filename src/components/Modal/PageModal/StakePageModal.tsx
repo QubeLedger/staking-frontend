@@ -169,25 +169,32 @@ const ModalText = styled.h4 <{ TextColor: string }>`
     color: ${props => props.TextColor};
 `
 
-const AmountText = styled.a <{ TextColor: string }>`
+const AmountText = styled.h1 <{ TextColor: string }>`
     font-size: 20px;
     font-weight: 500;
+    margin-left: auto;
     color: ${props => props.TextColor};
 `
 
 const Token = styled.div`
-    width: 150px;
-    display: flex;
-    align-items: center;
-`
-
-const TokenContrainer = styled.div`
-    width: 85%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 10px;
+    border-radius: 15px;
+    transition: all .5s ease-in-out;
+`
+
+const TokenContrainer = styled.div <{ hoverModal: string }>`
+    width: 85%;
+    height: 100%;
     margin-top: 10px;
     cursor: pointer;
+    border-radius: 15px;
+    transition: all .2s ease-in-out;
+    :hover{
+        background-color: ${props => props.hoverModal};
+    }
 `
 
 
@@ -216,24 +223,23 @@ const StyledDialogContent = styled(ModalDialogContent) <{ modalBgColor: string, 
 
 export const StakePageModal = () => {
 
-    const [ theme, setTheme] = useToggleTheme()
-    const [ ShowModalStake, setShowModalStake] = useShowModalStake();
-    const [ amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore()
-    const [ balances, setBalances ] = useBalancesStore();
+    const [theme, setTheme] = useToggleTheme()
+    const [ShowModalStake, setShowModalStake] = useShowModalStake();
+    const [amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore()
+    const [balances, setBalances] = useBalancesStore();
 
     const open = () => { setShowModalStake({ b: true }) };
     const close = () => { setShowModalStake({ b: false }) };
-    
+
     let tokens = TOKEN_INFO.filter((token) => token.type == "token")
 
     let TokensComponent = tokens.map((token) =>
-        
-        <TokenContrainer>
+        <TokenContrainer hoverModal={theme.hoverModal}>
             <Token>
                 <TokenLogo src={token?.Logo} />
                 <TokenName style={{ fontSize: "20px" }} TextColor={theme.TextColor}>{token?.Base}</TokenName>
+                <AmountText TextColor={theme.TextColor}>{isNaN(getBalanceByToken(balances, String(token?.Denom))) ? "0" : getBalanceByToken(balances, String(token?.Denom)).toFixed(2)}</AmountText>
             </Token>
-            <AmountText TextColor={theme.TextColor}>{isNaN(getBalanceByToken(balances, String(token?.Denom)))? "0" : getBalanceByToken(balances, String(token?.Denom)).toFixed(2)}</AmountText>
         </TokenContrainer>
     )
 
