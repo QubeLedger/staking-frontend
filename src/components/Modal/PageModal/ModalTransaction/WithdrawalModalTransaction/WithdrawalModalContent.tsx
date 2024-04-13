@@ -1,9 +1,7 @@
 import styled from "styled-components";
-import USDC from '../../../../../assets/svg/USDC Logo.webp'
-import Atom from '../../../../../assets/svg/qsATOM.svg'
-import { useToggleTheme } from "../../../../../hooks/useToggleTheme";
+import USDC from '../../../assets/svg/USDC Logo.webp'
 import { WithdrawalModalInfo } from "./WithdrawalModalInfo";
-import { WithdrawalPageConfirm } from "../../../../Buttons/PageButtons/WithdrawalPageConfirm";
+import { useToggleTheme } from "../../../../../hooks/useToggleTheme";
 
 const Container = styled.div`
     width: 100%;
@@ -85,37 +83,24 @@ export const WithdrawalModalContent = () => {
 
     const [theme, setTheme] = useToggleTheme();
 
-    const Content =
-        <>
+    return(
+        <Container>
             <Block>
                 <TextBlock>
-                    <Text TextColor={theme.TextColor}>You give</Text>
+                    <Text TextColor={theme.TextColor}>You'll get</Text>
                 </TextBlock>
                 <Field>
                     <LogoBlock>
-                        <TokenLogo src={Atom}></TokenLogo>
-                        <TokenName TextColor={theme.TextColor}>qsATOM</TokenName>
+                        <TokenLogo src={USDC}></TokenLogo>
+                        <TokenName TextColor={theme.TextColor}>USDC</TokenName>
                     </LogoBlock>
                     <AmountBlock>
-                        <AmountToken TextColor={theme.TextColor}>35</AmountToken>
+                        <AmountToken TextColor={theme.TextColor}>1100</AmountToken>
                     </AmountBlock>
                 </Field>
-                <GradientBlock />
+                <GradientBlock/>
                 <WithdrawalModalInfo/>
-                <WithdrawalPageConfirm />
             </Block>
-        </>
-
-    const Error =
-        <>
-            <Block>
-                
-            </Block>
-        </>
-
-    return (
-        <Container>
-            {Content}
         </Container>
     )
 }

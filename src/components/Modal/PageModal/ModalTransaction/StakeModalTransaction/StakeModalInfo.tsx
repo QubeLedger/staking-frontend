@@ -37,20 +37,23 @@ const BlockInfo = styled.div`
     justify-content: space-between;
     color: #BABABA;
     align-items: center;
-    margin-top: 5px;
 `
 
 export const StakeModalInfo = () => {
     return(
         <InfoBlock>
             <BlockInfo>
-                <InfoText>APY</InfoText>
-                <InfoText>13%</InfoText>
+                <InfoText>Total Deposit</InfoText>
             </BlockInfo>
-            <BlockInfo style={{marginTop: "10px"}}>
-                <InfoText>APY</InfoText>
-                <InfoText>13%</InfoText>
+            <BlockInfo>
+                <InfoText>Total Borrow</InfoText>
+            </BlockInfo>
+            <BlockInfo>
+                <InfoText>Borrow Interest Rate</InfoText>
             </BlockInfo>            
+            <LTVBlock>
+                <LTV>Risk Rate</LTV>
+            </LTVBlock>
         </InfoBlock>
     )
 }

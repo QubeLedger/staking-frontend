@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-    width: 90%;
+    width: 100%;
     height: 55px;
     background: linear-gradient(to right, #74BCFD, #339BFE);
     border: none;
