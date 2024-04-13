@@ -5,9 +5,7 @@ import { useShowModalTransaction, useShowWalletModal } from '../../../../../hook
 import { useToggleTheme } from '../../../../../hooks/useToggleTheme';
 import { Modal } from '../../../Modal';
 import { useWallet } from '../../../../../hooks/useWallet';
-import { useAmountLiquidStakeStore } from '../../../../../hooks/useAmountInStore';
-import { TOKEN_INFO } from '../../../../../constants';
-import { useBalancesStore } from '../../../../../hooks/useBalanceStore';
+import { useUnbondingsStore } from '../../../../../hooks/useUnbondingsStore';
 
 const ModalDialogOverlay = animated(DialogOverlay);
 const StyledDialogOvelay = styled(ModalDialogOverlay)`
@@ -108,6 +106,7 @@ const HeaderBlock = styled.div`
     margin-left: 17px;
 `
 
+
 const ModalDialogContent = animated(DialogContent);
 const StyledDialogContent = styled(ModalDialogContent) <{ modalBgColor: string, modalBorder: string }>`
     &[data-reach-dialog-content] {
@@ -127,7 +126,8 @@ const StyledDialogContent = styled(ModalDialogContent) <{ modalBgColor: string, 
     }
 `
 
-export const StakeModalTransaction = () => {
+
+export const ClaimModalTransaction = () => {
 
     const open = () => { setShowModalTranzaction({ b: true }) };
     const close = () => { setShowModalTranzaction({ b: false }) };
@@ -135,16 +135,13 @@ export const StakeModalTransaction = () => {
     const [ theme, setTheme] = useToggleTheme();
     const [ wallet, setWallet] = useWallet();
     const [ walletModalStatus, setWalletModalStatus] = useShowWalletModal();
-    const [ amtIn, setAmountLiquidStakeStore] = useAmountLiquidStakeStore();
-    const [ balances, setBalances ] = useBalancesStore();
-
-    let balance = balances.find((balance) => balance.denom == amtIn.denom)
+    const [ unbondings, setUnbondings] = useUnbondingsStore();
 
     const Content =
         <>
             <CloseDiv>
                 <HeaderBlock>
-                    <HeaderText TextColor={theme.TextColor}>Confirm Stake</HeaderText>
+                    <HeaderText TextColor={theme.TextColor}>Confirm Claim</HeaderText>
                 </HeaderBlock>
                 <CloseButton TextColor={theme.TextColor}>
                     <a style={{ cursor: "pointer" }} onClick={close} aria-hidden>×</a>
@@ -168,17 +165,9 @@ export const StakeModalTransaction = () => {
         Button = <OpenButtonBlock onClick={() => { setWalletModalStatus({ b: true }) }}>
             <OpenButton>Connect wallet</OpenButton>
         </OpenButtonBlock>
-    } else if (amtIn.base == "Select Token") {
+    } else if (unbondings.length == 0) {
         Button = <OpenButtonBlock>
-            <InactiveButton>Select Token</InactiveButton>
-        </OpenButtonBlock>
-    } else if (amtIn.amt == '' || amtIn.amt == '0' || isNaN(Number(amtIn.amt))) {
-        Button = <OpenButtonBlock>
-            <InactiveButton>Enter {amtIn.base} amount</InactiveButton>
-        </OpenButtonBlock>
-    } else if (Number(balance?.amt) < (Number(amtIn.amt) * (10 ** Number(TOKEN_INFO.find((token) => token.Base == amtIn.base)?.Decimals))) ) { 
-        Button = <OpenButtonBlock>
-            <InactiveButton>Insufficient funds</InactiveButton>
+            <InactiveButton>No unbonding tokens</InactiveButton>
         </OpenButtonBlock>
     } else {
         Button = <OpenButtonBlock>

@@ -7,8 +7,8 @@ import { useWallet } from "../../../hooks/useWallet";
 import { useEffect } from "react";
 import { useClient } from "../../../hooks/useClient";
 import { useBalancesStore } from "../../../hooks/useBalanceStore";
-import { UpdateBalances } from '../../../connection/balances';
-import { InitSigner } from '../../../connection/stargate';
+import { UpdateBalances } from '../../../web3/balances';
+import { InitSigner } from '../../../web3/stargate';
 
 const Container = styled.div`
     width: 450px;

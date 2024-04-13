@@ -3,6 +3,9 @@ import qsAtomlogo from '../../../../assets/svg/qsATOM.svg'
 import qsTIAlofo from '../../../../assets/svg/qsTIA.svg'
 import { ClaimPageAmount } from "./ClaimPageAmount";
 import { useToggleTheme } from "../../../../hooks/useToggleTheme";
+import { useUnbondingsStore } from "../../../../hooks/useUnbondingsStore";
+import { useWallet } from "../../../../hooks/useWallet";
+import { TOKEN_INFO } from "../../../../constants";
 
 const Container = styled.div <{ BorderField: string, claimBg: string }>`
     width: 100%;
@@ -76,36 +79,78 @@ const TokenContainer = styled.div`
     margin-left: 20px;
 `
 
+const AmountContainer = styled.div`
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 20px;
+`
+
+const StakeAmount = styled.a <{ TextColor: string }>`
+    font-size: 17px;
+    color: ${props => props.TextColor};
+    font-weight: 500;
+    @media (max-width: 500px) {
+        font-size: 14px;   
+    }
+`
+
+const TokenAmount = styled.a <{ TextColor: string }>`
+    font-size: 12px;
+    color: ${props => props.TextColor};
+    font-weight: 500;
+    @media (max-width: 500px) {
+        font-size: 14px;   
+    }
+`
+
+
 
 export const ClaimPageField = () => {
 
     const [theme, setTheme] = useToggleTheme()
+    const [unbondings, setUnbondings] = useUnbondingsStore();
+    const [wallet, setWallet] = useWallet();
 
+    let MainComponent;
 
-    const noAssets =
-        <>
+    if (wallet.init == false || unbondings.length == 0) {
+        MainComponent = <>
             <NoAssets BorderField={theme.BorderField} claimBg={theme.claimBg}>
                 <h4 style={{ color: "#C0C0C0" }}>No withdrawal requests detected.</h4>
             </NoAssets>
         </>
+    } else {
+        let TempMainComponent = unbondings.map((unbonding) =>
+            <Field style={{ border: unbonding.status == "PENDING" ? "2px solid #EC8600" : "2px solid #44A884" }}>
+                <TokenContainer>
+                    <TokenLogo src={TOKEN_INFO.find((token) => token.Denom == unbonding.stk_amount.denom)?.Logo} />
+                    <TokenName TextColor={theme.TextColor}>{TOKEN_INFO.find((token) => token.Denom == unbonding.stk_amount.denom)?.Base}</TokenName>
+                </TokenContainer>
+                <AmountContainer>
+                    <StakeAmount TextColor={theme.TextColor}>{
+                        unbonding.stk_amount.amount / (10 ** Number(TOKEN_INFO.find((token) => token.Denom == unbonding.stk_amount.denom)?.Decimals))
+                    } {
+                            TOKEN_INFO.find((token) => token.Denom == unbonding.stk_amount.denom)?.Base
+                        }</StakeAmount>
+                    <TokenAmount TextColor={theme.TextColor}>{
+                        unbonding.unbond_amount.amount / (10 ** Number(TOKEN_INFO.find((token) => token.Denom == unbonding.unbond_amount.denom)?.Decimals))
+                    } {
+                            TOKEN_INFO.find((token) => token.Denom == unbonding.unbond_amount.denom)?.Base
+                        }</TokenAmount>
+                </AmountContainer>
+            </Field>
+        )
 
-    return (
-        <Container BorderField={theme.BorderField} claimBg={theme.claimBg}>
-            <Field style={{ border: "2px solid #44A884", marginTop: "0px" }}>
-                <TokenContainer>
-                    <TokenLogo src={qsAtomlogo} />
-                    <TokenName TextColor={theme.TextColor}>qsATOM</TokenName>
-                </TokenContainer>
-                <ClaimPageAmount />
-            </Field>
-            <Field style={{ border: "2px solid #EC8600" }}>
-                <TokenContainer>
-                    <TokenLogo src={qsTIAlofo} />
-                    <TokenName TextColor={theme.TextColor}>qsTIA</TokenName>
-                </TokenContainer>
-                <ClaimPageAmount />
-            </Field>
+        MainComponent = <Container BorderField={theme.BorderField} claimBg={theme.claimBg}>
+            {TempMainComponent}
         </Container>
+    }
+    return (
+    <>
+        {MainComponent}
+    </>
     )
 }
 

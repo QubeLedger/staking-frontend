@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useToggleTheme } from "../../hooks/useToggleTheme";
+import { useAmountLiquidUnstakeStore } from "../../hooks/useAmountInStore";
 
 const Header = styled.div`
     width: 100%;
@@ -30,12 +31,13 @@ const PageDescription = styled.h3`
 export const WithdrawalPageHeader = () => {
 
     const [theme, setTheme] = useToggleTheme()
+    const [amtIn, setAmountLiquidUnstakeStore] = useAmountLiquidUnstakeStore()
 
     return(
         <Header>
-            <PageText TextColor={theme.TextColor}>Withdrawal ATOM</PageText>
+            <PageText TextColor={theme.TextColor}>Withdrawal {amtIn.base_out}</PageText>
             <PageDescription>
-                Request qsATOM withdrawal and claim ATOM
+                Request {amtIn.base} withdrawal and claim {amtIn.base_out}
             </PageDescription>
         </Header>
     )

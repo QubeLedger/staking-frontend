@@ -6,6 +6,8 @@ import { useToggleTheme } from '../../../../../hooks/useToggleTheme';
 import { Modal } from '../../../Modal';
 import { useWallet } from '../../../../../hooks/useWallet';
 import { useAmountLiquidUnstakeStore } from '../../../../../hooks/useAmountInStore';
+import { useBalancesStore } from '../../../../../hooks/useBalanceStore';
+import { TOKEN_INFO } from '../../../../../constants';
 
 const ModalDialogOverlay = animated(DialogOverlay);
 const StyledDialogOvelay = styled(ModalDialogOverlay)`
@@ -137,6 +139,9 @@ export const WithdrawalModalTransaction = () => {
     const [wallet, setWallet] = useWallet();
     const [walletModalStatus, setWalletModalStatus] = useShowWalletModal();
     const [amtIn, setAmountLiquidUnstakeStore] = useAmountLiquidUnstakeStore();
+    const [ balances, setBalances ] = useBalancesStore();
+
+    let balance = balances.find((balance) => balance.denom == amtIn.denom)
 
     const Content =
         <>
@@ -173,6 +178,10 @@ export const WithdrawalModalTransaction = () => {
     } else if (amtIn.amt == '' || amtIn.amt == '0' || isNaN(Number(amtIn.amt))) {
         Button = <OpenButtonBlock>
             <InactiveButton>Enter {amtIn.base} amount</InactiveButton>
+        </OpenButtonBlock>
+    } else if (Number(balance?.amt) < (Number(amtIn.amt) * (10 ** Number(TOKEN_INFO.find((token) => token.Base == amtIn.base)?.Decimals))) ) { 
+        Button = <OpenButtonBlock>
+            <InactiveButton>Insufficient funds</InactiveButton>
         </OpenButtonBlock>
     } else {
         Button = <OpenButtonBlock>
