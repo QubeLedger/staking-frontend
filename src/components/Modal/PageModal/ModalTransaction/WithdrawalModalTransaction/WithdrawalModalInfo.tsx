@@ -37,23 +37,20 @@ const BlockInfo = styled.div`
     justify-content: space-between;
     color: #BABABA;
     align-items: center;
+    margin-top: 5px;
 `
 
 export const WithdrawalModalInfo = () => {
         return(
         <InfoBlock>
             <BlockInfo>
-                <InfoText>Total Deposit</InfoText>
+                <InfoText>APY</InfoText>
+                <InfoText>13%</InfoText>
             </BlockInfo>
             <BlockInfo>
-                <InfoText>Total Borrow</InfoText>
+                <InfoText>APY</InfoText>
+                <InfoText style={{marginTop: "10px"}}>13%</InfoText>
             </BlockInfo>
-            <BlockInfo>
-                <InfoText>Borrow Interest Rate</InfoText>
-            </BlockInfo>            
-            <LTVBlock>
-                <LTV>Risk Rate</LTV>
-            </LTVBlock>
         </InfoBlock>
     )
 }
