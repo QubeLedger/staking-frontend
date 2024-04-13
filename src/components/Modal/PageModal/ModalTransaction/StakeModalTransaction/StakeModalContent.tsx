@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import USDC from '../../../assets/svg/USDC Logo.webp'
+import USDC from '../../../../../assets/svg/USDC Logo.webp'
+import qsAtom from '../../../../../assets/svg/qsATOM.svg'
+import Atom from '../../../../../assets/svg/AtomLogo.webp'
 import { useToggleTheme } from "../../../../../hooks/useToggleTheme";
 import { StakeModalInfo } from "./StakeModalInfo";
+import { StakePageConfirm } from "../../../../Buttons/PageButtons/StakePageConfirm";
 
 const Container = styled.div`
     width: 100%;
@@ -83,24 +86,49 @@ export const StakeModalContent = () => {
 
     const [theme, setTheme] = useToggleTheme();
 
-    return(
-        <Container>
+    const Content =
+        <>
             <Block>
                 <TextBlock>
-                    <Text TextColor={theme.TextColor}>You'll get</Text>
+                    <Text TextColor={theme.TextColor}>You give</Text>
                 </TextBlock>
                 <Field>
                     <LogoBlock>
-                        <TokenLogo src={USDC}></TokenLogo>
-                        <TokenName TextColor={theme.TextColor}>USDC</TokenName>
+                        <TokenLogo src={Atom}></TokenLogo>
+                        <TokenName TextColor={theme.TextColor}>ATOM</TokenName>
                     </LogoBlock>
                     <AmountBlock>
-                        <AmountToken TextColor={theme.TextColor}>1100</AmountToken>
+                        <AmountToken TextColor={theme.TextColor}>35</AmountToken>
                     </AmountBlock>
                 </Field>
-                <GradientBlock/>
-                <StakeModalInfo/>
+                <TextBlock>
+                    <Text TextColor={theme.TextColor}>You give</Text>
+                </TextBlock>
+                <Field>
+                    <LogoBlock>
+                        <TokenLogo src={qsAtom}></TokenLogo>
+                        <TokenName TextColor={theme.TextColor}>qsATOM</TokenName>
+                    </LogoBlock>
+                    <AmountBlock>
+                        <AmountToken TextColor={theme.TextColor}>35</AmountToken>
+                    </AmountBlock>
+                </Field>
+                <GradientBlock />
+                <StakeModalInfo />
+                <StakePageConfirm />
             </Block>
+        </>
+
+    const Error =
+        <>
+            <Block>
+                
+            </Block>
+        </>
+
+    return (
+        <Container>
+            {Content}
         </Container>
     )
 }

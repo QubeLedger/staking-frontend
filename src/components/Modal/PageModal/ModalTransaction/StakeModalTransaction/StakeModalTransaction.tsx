@@ -6,6 +6,7 @@ import { useToggleTheme } from '../../../../../hooks/useToggleTheme';
 import { Modal } from '../../../Modal';
 import { useWallet } from '../../../../../hooks/useWallet';
 import { useAmountLiquidStakeStore } from '../../../../../hooks/useAmountInStore';
+import { StakeModalContent } from './StakeModalContent';
 
 const ModalDialogOverlay = animated(DialogOverlay);
 const StyledDialogOvelay = styled(ModalDialogOverlay)`
@@ -33,7 +34,6 @@ const OpenButtonBlock = styled.div`
 
 const CloseButton = styled.button <{ TextColor: string }>`
     width: 25px;
-    height: 25px;
     font-size: 30px;
     margin-right: 20px;
     margin-top: -1px;
@@ -85,6 +85,13 @@ const CloseDiv = styled.div`
     margin-top: 20px;
 `
 
+const CloseText = styled.h5`
+    cursor: pointer;
+    margin: 0;
+    font-size: 25px;
+    font-weight: 400;
+`
+
 const ContentDiv = styled.div`
     width: 100%;
     display: flex;
@@ -112,7 +119,7 @@ const StyledDialogContent = styled(ModalDialogContent) <{ modalBgColor: string, 
     &[data-reach-dialog-content] {
         background-color: ${props => props.modalBgColor};
         width: 375px;
-        height: 400px;
+        height: 380px;
         display: flex;
         flex-direction: column;
         border-radius: 20px;
@@ -144,11 +151,10 @@ export const StakeModalTransaction = () => {
                     <HeaderText TextColor={theme.TextColor}>Confirm Stake</HeaderText>
                 </HeaderBlock>
                 <CloseButton TextColor={theme.TextColor}>
-                    <a style={{ cursor: "pointer" }} onClick={close} aria-hidden>×</a>
+                    <CloseText onClick={close} aria-hidden>×</CloseText>
                 </CloseButton>
             </CloseDiv>
-            <ContentDiv>
-            </ContentDiv>
+            <StakeModalContent/>
         </>
 
     const ModalComponent = Modal(
