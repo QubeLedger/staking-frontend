@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-    width: 100%;
+    width: 90%;
     height: 55px;
     background: linear-gradient(to right, #74BCFD, #339BFE);
     border: none;
-    font-size: 22px;
+    font-size: 17px;
     font-weight: 600;
     color: white;
     border-radius: 20px;

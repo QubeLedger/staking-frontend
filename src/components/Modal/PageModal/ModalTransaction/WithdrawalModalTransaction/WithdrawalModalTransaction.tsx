@@ -8,6 +8,7 @@ import { useWallet } from '../../../../../hooks/useWallet';
 import { useAmountLiquidUnstakeStore } from '../../../../../hooks/useAmountInStore';
 import { useBalancesStore } from '../../../../../hooks/useBalanceStore';
 import { TOKEN_INFO } from '../../../../../constants';
+import { WithdrawalModalContent } from './WithdrawalModalContent';
 
 const ModalDialogOverlay = animated(DialogOverlay);
 const StyledDialogOvelay = styled(ModalDialogOverlay)`
@@ -35,7 +36,6 @@ const OpenButtonBlock = styled.div`
 
 const CloseButton = styled.button <{ TextColor: string }>`
     width: 25px;
-    height: 25px;
     font-size: 30px;
     margin-right: 20px;
     margin-top: -1px;
@@ -86,6 +86,13 @@ const CloseDiv = styled.div`
     font-family: 'Metropolis', sans-serif;
     color: white;
     margin-top: 20px;
+`
+
+const CloseText = styled.h5`
+    cursor: pointer;
+    margin: 0;
+    font-size: 25px;
+    font-weight: 400;
 `
 
 const ContentDiv = styled.div`
@@ -150,11 +157,10 @@ export const WithdrawalModalTransaction = () => {
                     <HeaderText TextColor={theme.TextColor}>Confirm Withdrawal</HeaderText>
                 </HeaderBlock>
                 <CloseButton TextColor={theme.TextColor}>
-                    <a style={{ cursor: "pointer" }} onClick={close} aria-hidden>×</a>
+                    <CloseText onClick={close} aria-hidden>×</CloseText>
                 </CloseButton>
             </CloseDiv>
-            <ContentDiv>
-            </ContentDiv>
+            <WithdrawalModalContent/>
         </>
 
     const ModalComponent = Modal(

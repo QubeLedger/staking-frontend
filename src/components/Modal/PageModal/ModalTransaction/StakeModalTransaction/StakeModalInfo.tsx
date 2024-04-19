@@ -22,15 +22,6 @@ const InfoText = styled.h1`
     margin: 0;
 `
 
-const LTV = styled.h1`
-    font-size: 16px;
-`
-
-const LTVInfo = styled.h1 <{TextColor: string}>`
-    font-size: 16px;
-    color: ${props => props.TextColor};
-`
-
 const BlockInfo = styled.div`
     width: 90%;
     display: flex;
@@ -43,17 +34,13 @@ export const StakeModalInfo = () => {
     return(
         <InfoBlock>
             <BlockInfo>
-                <InfoText>Total Deposit</InfoText>
+                <InfoText>APY</InfoText>
+                <InfoText style={{marginTop: "10px"}}>13%</InfoText>
             </BlockInfo>
             <BlockInfo>
-                <InfoText>Total Borrow</InfoText>
+                <InfoText>APY</InfoText>
+                <InfoText style={{marginTop: "10px"}}>13%</InfoText>
             </BlockInfo>
-            <BlockInfo>
-                <InfoText>Borrow Interest Rate</InfoText>
-            </BlockInfo>            
-            <LTVBlock>
-                <LTV>Risk Rate</LTV>
-            </LTVBlock>
         </InfoBlock>
     )
 }
